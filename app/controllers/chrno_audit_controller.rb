@@ -13,6 +13,8 @@ class ChrnoAuditController < ChrnoAudit::ApplicationController
   def history
     attr_name = params[:attr_name]
     attr_value = params[:value]
+    page = params[:page] || 1
+    per = params[:per] || 20
 
     unless attr_name.in? @model.attribute_names
       raise ChrnoAudit::AttributeNotFound.new attr_name
@@ -31,7 +33,9 @@ class ChrnoAuditController < ChrnoAudit::ApplicationController
 
     @logs = ChrnoAudit::AuditRecord.for_objects( *(@objects) ) \
       .order( "audit_log.created_at #{order}" ) \
-      .includes( :initiator )
+      .includes( :initiator ) \
+      .page(page) \
+      .per(per)
   end
 
   private

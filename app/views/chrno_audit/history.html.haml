@@ -1,0 +1,38 @@
+%h2= t("chrno_audit.total_records") + ': ' + @logs.size.to_s
+
+%table.chrno-table
+  %thead.chrno-table-head
+    %tr
+      %th= t ".created_at"
+      %th= t ".author"
+      %th= t ".action"
+      %th= t ".diff"
+      %th= t ".context"
+
+  %tbody.chrno-table-body
+    - @logs.each do |item|
+      %tr
+        %td= l item.created_at, format: :short
+        %td= item.initiator.try :name || item.initiator.to_s
+        %td= item.action
+        %td
+          %dl.diff
+            - item.diff.each do |attr, ( old_value, new_value )|
+              %dt= @model.human_attribute_name( attr )
+              %dd
+                %del= old_value.inspect
+                %ins= new_value.inspect
+        %td
+          %ul
+            - item.context.each do |key, value|
+              %li
+                %strong
+                  = key
+                  &nbsp;
+                = value
+
+%tfoot
+  %tr
+    %td{:collspan => 5}
+      - if defined? paginate
+        = paginate @logs

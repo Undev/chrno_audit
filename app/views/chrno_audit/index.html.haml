@@ -1,0 +1,8 @@
+- ChrnoAudit.models.each do |model_name, model|
+  = link_to model_name, chrno_audit.model_path(model_name.underscore)
+  %span .
+  = t('chrno_audit.auditable_fields')
+  %span :
+  - model.auditable_fields.each do |field_name|
+    = field_name
+  %br

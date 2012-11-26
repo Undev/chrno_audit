@@ -1,0 +1,7 @@
+ru:
+  chrno_audit:
+    model_not_found: "Невозможно найти модель \"%{model_name}\"."
+    record_not_found: "Невозможно найти модель %{model_name} с %{attr_name}=%{attr_value}"
+    auditable_fields: Поля
+    view_its_history: посмотреть историю
+    total_records: всего записей

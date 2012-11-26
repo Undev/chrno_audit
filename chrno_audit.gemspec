@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "rails", ">= 3.1"
   s.add_runtime_dependency "activerecord", ">= 3.1"
+  s.add_runtime_dependency "kaminari", ">= 0.14.1"
 end
