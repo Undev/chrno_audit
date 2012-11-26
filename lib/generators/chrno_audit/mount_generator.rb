@@ -16,13 +16,14 @@ module ChrnoAudit
     def make_locale
       if options.locales?
         copy_file "../../../../config/locales/en.yml", "config/locales/chrno_audit.en.yml"
+        copy_file "../../../../config/locales/ru.yml", "config/locales/chrno_audit.ru.yml"
       end
     end
 
     def make_views
       if options.views?
         %W( history index model ).each do |name|
-          copy_file File.expand_path("../../../../app/views/chrno_audit/#{name}.html.erb", __FILE__), "app/views/chrno_audit/#{name}.html.erb"
+          copy_file File.expand_path("../../../../app/views/chrno_audit/#{name}.html.haml", __FILE__), "app/views/chrno_audit/#{name}.html.haml"
         end
       end
     end
