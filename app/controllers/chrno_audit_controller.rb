@@ -8,6 +8,9 @@ class ChrnoAuditController < ChrnoAudit::ApplicationController
   end
 
   def model
+    page = params[:page] || 1
+    per = params[:per] || 20
+    @objects = @model.page(page).per(per)
   end
 
   def history

@@ -2,7 +2,13 @@
 %br
 = @model.auditable_fields
 %br
-- @model.all.each do |object|
+- @objects.each do |object|
   = object.id
   = link_to t("chrno_audit.view_its_history"), chrno_audit.history_path(@model.model_name.underscore, :id, object.id)
   %br
+
+%tfoot
+  %tr
+    %td{:collspan => 5}
+      - if defined? paginate
+        = paginate @objects
