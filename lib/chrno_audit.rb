@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'kaminari'
 require 'active_support/core_ext/hash'
 
 module ChrnoAudit
