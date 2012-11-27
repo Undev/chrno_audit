@@ -4,20 +4,19 @@ class ChrnoAuditController < ChrnoAudit::ApplicationController
     self.class.layout :layout
   }
 
+  has_scope :page, :default => 1, :only => [:model, :history]
+  has_scope :per, :default => 20, :only => [:model, :history]
+
   def index
   end
 
   def model
-    page = params[:page] || 1
-    per = params[:per] || 20
-    @objects = @model.page(page).per(per)
+    @objects = apply_scopes(@model)
   end
 
   def history
     attr_name = params[:attr_name]
     attr_value = params[:value]
-    page = params[:page] || 1
-    per = params[:per] || 20
 
     unless attr_name.in? @model.attribute_names
       raise ChrnoAudit::AttributeNotFound.new attr_name
@@ -34,11 +33,9 @@ class ChrnoAuditController < ChrnoAudit::ApplicationController
 
     order = "ASC" unless params[:order].tap{ |o| o.try("upcase!") } == "DESC"
 
-    @logs = ChrnoAudit::AuditRecord.for_objects( *(@objects) ) \
+    @logs = apply_scopes(ChrnoAudit::AuditRecord).for_objects( *(@objects) ) \
       .order( "audit_log.created_at #{order}" ) \
-      .includes( :initiator ) \
-      .page(page) \
-      .per(per)
+      .includes( :initiator )
   end
 
   private
