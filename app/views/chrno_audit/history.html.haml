@@ -34,5 +34,5 @@
 %tfoot
   %tr
     %td{:collspan => 5}
-      - if defined? paginate
+      - _with_routes(ChrnoAudit::Engine.routes) do
         = paginate @logs
